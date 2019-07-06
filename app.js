@@ -24,26 +24,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const dataBase = {
-  users: [
-    {
-      id: '1',
-      name: 'khalid',
-      email: 'khalid@gmail.com',
-      password: 'khalid',
-      createAt: new Date()
-    },
-    {
-      id: '2',
-      name: 'ali',
-      email: 'ali@gmail.com',
-      password: 'ali',
-      createAt: new Date()
-    }
-  ]
-};
-
-app.get('/', (req, res) => res.json({ hello: 'hello' }));
+app.get('/', (req, res) => res.send('it`s works'));
 
 app.post('/signin', (req, res) => {
   signin.signinHandller(req, res, db, bcrypt);
