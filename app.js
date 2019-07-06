@@ -12,10 +12,8 @@ const image = require('./controller/image');
 const db = knex({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
-    user: 'postgres',
-    password: 'test',
-    database: 'smartbrain'
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
   }
 });
 
@@ -42,12 +40,3 @@ app.post('/imageurl', (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000, () => console.log('listen in port 3000'));
-
-/*
-
-register --> post --> create user
-signin --> post -->  user signin
-prfile/:userId --> get -->  get user Profile
-image --> put -->  in existing user profile
-
-*/
