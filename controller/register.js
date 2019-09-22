@@ -1,7 +1,10 @@
+const { validationResult } = require('express-validator');
+
 const registerHandller = (req, res, db, bcrypt) => {
   const { email, password, name } = req.body;
-  if (!email || !name || !password) {
-    return res.status(400).json('information is not valid');
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ error: errors.array()[0].msg });
   }
   const hash = bcrypt.hashSync(password);
   db.transaction(trx => {
@@ -24,7 +27,7 @@ const registerHandller = (req, res, db, bcrypt) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch(err => res.status(400).json('unable to register'));
+  }).catch(err => res.status(400).json(err));
 };
 
 module.exports = {

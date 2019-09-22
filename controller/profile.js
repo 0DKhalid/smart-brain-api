@@ -13,6 +13,23 @@ const profileHandller = (req, res, db) => {
     .catch(err => console.log(err));
 };
 
+const profileUpdateHandller = (req, res, db) => {
+  const { id } = req.params;
+  const { name, age, pet } = req.body.formInput;
+  db('users')
+    .where({ id })
+    .update({ name })
+    .then(response => {
+      if (response) {
+        res.json('success');
+      } else {
+        res.status(400).json('Unable to Update');
+      }
+    })
+    .catch(err => res.status(400).json('error updating user'));
+};
+
 module.exports = {
-  profileHandller
+  profileHandller,
+  profileUpdateHandller
 };
